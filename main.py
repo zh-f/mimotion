@@ -157,12 +157,8 @@ def getBeijinTime():
                 msg_mi = ""
             for user_mi, passwd_mi in zip(user_list, passwd_list):
                 msg_mi += main(user_mi,passwd_mi,min_1, max_1)
-                #print(msg_mi)
-            if a:
-               push('【小米运动步数修改】', msg_mi)
-               push_wx(msg_mi)
-            else:
-               print("此次修改结果不推送")
+                #print(msg_mi)            
+             print("此次修改结果不推送")
     else:
         print("当前不是主人设定的提交步数时间或者主人设置了0步数呢，本次不提交")
         return
@@ -315,38 +311,6 @@ def push_wx(desp=""):
         print(response)
 
 
-# 企业微信
-def get_access_token():
-    urls = base_url + 'corpid=' + corpid + '&corpsecret=' + corpsecret
-    resp = requests.get(urls).json()
-    access_token = resp['access_token']
-    return access_token
-
-
-def run(msg):
-    if position:
-        data = {
-            "touser": touser,
-            "toparty": toparty,
-            "totag": totag,
-            "msgtype": "text",
-            "agentid": agentid,
-            "text": {
-                "content": "【小米运动步数修改】\n" + msg
-            },
-            "safe": 0,
-            "enable_id_trans": 0,
-            "enable_duplicate_check": 0,
-            "duplicate_check_interval": 1800
-        }
-        data = json.dumps(data)
-        req_urls = req_url + get_access_token()
-        resp = requests.post(url=req_urls, data=data).text
-        print(resp)
-        #print(data)
-        return resp
-    else:
-        return
 
 def main_handler(event, context):
     getBeijinTime()
